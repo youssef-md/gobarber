@@ -8,7 +8,7 @@ class UserController {
       email: Yup.string()
         .email()
         .required(),
-      password: Yup.stirng()
+      password: Yup.string()
         .required()
         .min(6),
     });
