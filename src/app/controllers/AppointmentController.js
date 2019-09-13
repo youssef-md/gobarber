@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { parseISO, startOfHour, isBefore, format } from 'date-fns';
+import { parseISO, startOfHour, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Appointment from '../models/Appointment';
 import User from '../models/User';
@@ -61,12 +61,12 @@ class AppointmentController {
         .status(401)
         .json({ error: 'You can only create appointments with providers' });
 
-    // validate past hours
+    // block appointments in past hours
     const hourStart = startOfHour(parseISO(date));
     if (isBefore(hourStart, new Date()))
       return res.status(400).json({ error: 'Past dates are not allowed' });
 
-    // validate repeated appointments
+    // block repeated appointments
     const checkRepeatedAppointment = await Appointment.findOne({
       where: {
         provider_id,
@@ -96,6 +96,26 @@ class AppointmentController {
       content: `Novo agendamento de ${user.name} dia ${formatedDate}`,
       user: provider_id,
     });
+
+    return res.json(appointment);
+  }
+
+  async delete(req, res) {
+    const appointment = await Appointment.findByPk(req.params.id);
+
+    if (appointment.user_id !== req.userId)
+      return res
+        .status(401)
+        .json({ error: 'You are not allowed to cancel this appointment' });
+
+    const subtractAppointmentDate = subHours(appointment.date, 1);
+    if (isBefore(subtractAppointmentDate, new Date()))
+      return res.status(401).json({
+        error: 'You can only cancel appointments 1 hour in advance',
+      });
+
+    appointment.canceled_at = new Date();
+    await appointment.save();
 
     return res.json(appointment);
   }
