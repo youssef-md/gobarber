@@ -33,7 +33,6 @@ class Mail {
       nodemailer_hbs({
         viewEngine: express_hbs.create({
           layoutsDir: resolve(viewPath, 'layouts'),
-          partialsDir: resolve(viewPath, 'partials'),
           defaultLayout: 'default',
           extname: '.hbs',
         }),
