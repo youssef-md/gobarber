@@ -29,7 +29,7 @@ class AvailableController {
     });
 
     const schedule = [
-      '08:00', // format into -> 2019-09-25 08:00:00
+      '08:00',
       '09:00',
       '10:00',
       '11:00',
@@ -53,7 +53,9 @@ class AvailableController {
       return {
         time,
         value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
-        available: isAfter(value, new Date()),
+        available:
+          isAfter(value, new Date()) &&
+          !appointments.find(a => format(a.date, 'HH:mm') === time),
       };
     });
 
