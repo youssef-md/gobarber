@@ -639,7 +639,7 @@ cookie-signature@1.0.6:
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
   integrity sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
 
-cookie@0.3.1:
+cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
   integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
@@ -2391,6 +2391,11 @@ multer@^1.4.2:
     type-is "^1.6.4"
     xtend "^4.0.0"
 
+mustache@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-3.1.0.tgz#9fba26e7aefc5709f07ff585abb7e0abced6c372"
+  integrity sha512-3Bxq1R5LBZp7fbFPZzFe5WN4s0q3+gxZaZuZVY+QctYJiCiVgXHOTIC0/HgZuOPFt/6BQcx5u0H2CUOxT/RoGQ==
+
 mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
@@ -3553,6 +3558,11 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
+stack-trace@0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
+  integrity sha1-VHxws0fo0ytOEI6hoqFZ5f3eGcA=
+
 static-extend@^0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/static-extend/-/static-extend-0.1.2.tgz#60809c39cbff55337226fd5e0b520f341f1fb5c6"
@@ -4111,6 +4121,15 @@ yargs@^13.1.0:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.1"
+
+youch@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/youch/-/youch-2.0.10.tgz#e0f6312b12304fd330a0c4a0e0925b0123f7d495"
+  integrity sha512-qPLQW2TuwlcK9sm5i1Gbb9ezRZRZyzr6NsY5cqxsbh+2iEyKPxLlz0OSAc+pQ7mv1pYZLri1MXynggP6R2FcNQ==
+  dependencies:
+    cookie "^0.3.1"
+    mustache "^3.0.0"
+    stack-trace "0.0.10"
 
 yup@^0.27.0:
   version "0.27.0"
