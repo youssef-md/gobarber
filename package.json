@@ -8,6 +8,7 @@
     "queue": "nodemon src/queue.js"
   },
   "dependencies": {
+    "@sentry/node": "5.6.2",
     "bcryptjs": "^2.4.3",
     "bee-queue": "^1.2.2",
     "date-fns": "^2.0.0-beta.5",
