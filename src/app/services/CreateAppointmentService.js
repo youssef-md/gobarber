@@ -10,10 +10,10 @@ class CreateAppointmentService {
       throw new Error('You can not create an appointment with yourself');
 
     // Check if the provider_id is a provider
-    const isProvider = await User.findOne({
+    const provider = await User.findOne({
       where: { id: provider_id, provider: true },
     });
-    if (!isProvider)
+    if (!provider)
       throw new Error('You can only create appointments with providers');
 
     // block appointments in past hours
@@ -45,7 +45,7 @@ class CreateAppointmentService {
     });
 
     await Notification.create({
-      content: `Novo agendamento de ${user.name} dia ${formatedDate}`,
+      content: `${provider.name} você tem um novo agendamento com ${user.name} dia ${formatedDate}`,
       user: provider_id,
     });
 
