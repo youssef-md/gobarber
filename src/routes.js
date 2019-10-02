@@ -15,12 +15,13 @@ import authMiddleware from './app/middlewares/auth';
 
 import validadeUserStore from './app/validators/UserStore';
 import validadeUserUpdate from './app/validators/UserUpdate';
+import validadeSessionStore from './app/validators/SessionStore';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post('/users', validadeUserStore, UserController.store);
-routes.post('/sessions', SessionController.store);
+routes.post('/sessions', validadeSessionStore, SessionController.store);
 
 routes.use(authMiddleware); // global middleware for the routes bellow
 
