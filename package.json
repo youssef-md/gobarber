@@ -5,7 +5,14 @@
   "repository": "git@github.com:youssef-md/chavoso-backend.git",
   "author": "youssef muhamad <emaildeyoussefmuhamad@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "sucrase": "^3.10.1"
   }
 }
