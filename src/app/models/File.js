@@ -1,4 +1,4 @@
-import { Model, STRING } from 'sequelize';
+import { Model, STRING, VIRTUAL } from 'sequelize';
 
 class File extends Model {
   static init(sequelize) {
@@ -6,6 +6,12 @@ class File extends Model {
       {
         name: STRING,
         path: STRING,
+        url: {
+          type: VIRTUAL,
+          get() {
+            return `http://localhost:3333/files/${this.path}`;
+          },
+        },
       },
       { sequelize }
     );
