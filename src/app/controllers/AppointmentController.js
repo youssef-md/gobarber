@@ -1,12 +1,21 @@
 import * as Yup from 'yup';
 
-import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
+import {
+  startOfHour,
+  parseISO,
+  isBefore,
+  isAfter,
+  format,
+  subHours,
+} from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
 import Notification from '../schemas/Notification';
+
+import Nodemailer from '../../lib/Nodemailer';
 
 class AppointmentController {
   async index(req, res) {
@@ -112,21 +121,40 @@ class AppointmentController {
   }
 
   async delete(req, res) {
-    const appointment = await Appointment.findByPk(req.params.id);
+    const appointment = await Appointment.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['name', 'email'],
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name'],
+        },
+      ],
+    });
 
     if (appointment.user_id !== req.userId)
       return res.status(401).json({
         error: 'You do not have permission to cancel this appointment',
       });
 
-    const subtractedDate = subHours(appointment.date, 1); // cancel only 1 hour before
-    if (isBefore(subtractedDate, new Date()))
+    const limitDateToCancel = subHours(appointment.date, 1); // until 1 hour before the appointment
+    if (isAfter(new Date(), limitDateToCancel))
       return res
         .status(401)
         .json({ error: 'You can only cancel appointments 1 hour in advance' });
 
     appointment.canceled_at = new Date();
     await appointment.save();
+
+    await Nodemailer.sendMail({
+      to: `${appointment.provider.name} <${appointment.provider.email}>`,
+      subject: `${appointment.user.name} cancelou o agendamento`,
+      text: 'Você tem um novo cancelamento...',
+    });
 
     return res.json(appointment);
   }
