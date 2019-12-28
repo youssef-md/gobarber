@@ -15,7 +15,9 @@ import User from '../models/User';
 import File from '../models/File';
 import Notification from '../schemas/Notification';
 
-import Nodemailer from '../../lib/Nodemailer';
+import Queue from '../../lib/Queue';
+
+import CancelationMail from '../jobs/CancelationMail';
 
 class AppointmentController {
   async index(req, res) {
@@ -150,17 +152,9 @@ class AppointmentController {
     appointment.canceled_at = new Date();
     await appointment.save();
 
-    await Nodemailer.sendMail({
-      to: `${appointment.provider.name} <${appointment.provider.email}>`,
-      subject: `${appointment.user.name} cancelou o agendamento`,
-      template: 'cancelation',
-      context: {
-        provider: appointment.provider.name,
-        user: appointment.user.name,
-        date: format(appointment.date, "'dia' dd 'de' MMMM', às' H:mm'h'", {
-          locale: pt,
-        }),
-      },
+    // Send the cancelation mail in a background job
+    Queue.enqueue(CancelationMail.key, {
+      appointment,
     });
 
     return res.json(appointment);

@@ -35,8 +35,10 @@ Authentication: None
 docker run --name chavoso-redis -p 6379:6379 -d -t redis:alpine
 ```
 
-6. You can run two npm scripts for the development mode:
+6. The scripts to run this project are:
 
 - `yarn dev`: will start dev server on port :3333, certify that you have all the docker containers running.
 
 - `yarn dev:debug`: will run this project in debug mode, after you run this script you have to start the debug mode in your vscode.
+
+- `yarn queue`: will process the background jobs queue(execute it in another terminal)
