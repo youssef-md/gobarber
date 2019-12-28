@@ -21,7 +21,22 @@ Password: <container_password>
 docker run --name chavoso-mongo -p 27017:27017 -d -t mongo
 ```
 
-4. You can run two npm scripts for the development mode: 
-* ```yarn dev```: will start dev server on port :3333, certify that you have all the docker containers running.
-  
-* ```yarn dev:debug```: will run this project in debug mode, after you run this script you have to start the debug mode in your vscode.
+4. Install MongoDB Compass and log with:
+
+```docker
+Hostname: localhost
+Port: 27017
+Authentication: None
+```
+
+5. Create the container for Redis to manage background jobs:
+
+```docker
+docker run --name chavoso-redis -p 6379:6379 -d -t redis:alpine
+```
+
+6. You can run two npm scripts for the development mode:
+
+- `yarn dev`: will start dev server on port :3333, certify that you have all the docker containers running.
+
+- `yarn dev:debug`: will run this project in debug mode, after you run this script you have to start the debug mode in your vscode.
