@@ -35,7 +35,9 @@ Authentication: None
 docker run --name chavoso-redis -p 6379:6379 -d -t redis:alpine
 ```
 
-6. The scripts to run this project are:
+6. Copy .env.example and rename it to .env and fill in the attributes
+
+7. The scripts to run this project are:
 
 - `yarn dev`: will start dev server on port :3333, certify that you have all the docker containers running.
 
