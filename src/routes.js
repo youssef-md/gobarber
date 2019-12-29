@@ -10,6 +10,7 @@ import ProviderController from './app/controllers/ProviderController.js';
 import AppointmentController from './app/controllers/AppointmentController.js';
 import ScheduleController from './app/controllers/ScheduleController.js';
 import NotificationController from './app/controllers/NotificationController.js';
+import AvailableController from './app/controllers/AvailableController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -24,6 +25,7 @@ routes.use(authMiddleware); // Global token validator
 routes.put('/users', UserController.update);
 
 routes.get('/providers', ProviderController.index);
+routes.get('/providers/:providerId/available', AvailableController.index);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
