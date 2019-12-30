@@ -1,4 +1,5 @@
 import User from '../models/User';
+import File from '../models/File';
 
 import * as Yup from 'yup';
 
@@ -44,8 +45,19 @@ class UserController {
     if (oldPassword && !(await user.checkPassword(oldPassword)))
       return res.status(401).json({ error: 'Old password does not match' });
 
-    const { id, name, provider } = await user.update(req.body);
-    return res.json({ id, name, email, provider });
+    await user.update(req.body); // if avatar is sent, it'll update
+
+    const { id, name, avatar } = await User.findByPk(req.userId, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
+
+    return res.json({ id, name, email, avatar });
   }
 }
 
