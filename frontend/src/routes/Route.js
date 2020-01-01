@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
+import AuthLayout from '../pages/_layouts/auth';
+import DefaultLayout from '../pages/_layouts/default';
+
 export default function RouteWrapper({
   component: Component,
   isPrivate,
@@ -10,10 +13,20 @@ export default function RouteWrapper({
   const logged = true;
 
   if (!logged && isPrivate) return <Redirect to="/" />;
-
   if (logged && !isPrivate) return <Redirect to="/dashboard" />;
 
-  return <Route {...rest} component={Component} />;
+  const PageLayout = logged ? DefaultLayout : AuthLayout;
+
+  return (
+    <Route
+      {...rest}
+      render={props => (
+        <PageLayout>
+          <Component {...props} />
+        </PageLayout>
+      )}
+    />
+  );
 }
 
 RouteWrapper.propTypes = {
