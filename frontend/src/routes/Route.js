@@ -10,7 +10,7 @@ export default function RouteWrapper({
   isPrivate,
   ...rest
 }) {
-  const logged = true;
+  const logged = false;
 
   if (!logged && isPrivate) return <Redirect to="/" />;
   if (logged && !isPrivate) return <Redirect to="/dashboard" />;
