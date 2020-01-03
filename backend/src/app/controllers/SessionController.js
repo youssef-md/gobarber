@@ -31,10 +31,10 @@ class SessionController {
       ],
     });
 
-    if (!user) return res.status(401).json({ error: 'Email not found' });
+    if (!user) return res.status(401).json({ error: 'Email não encontrado' });
 
     if (!(await user.checkPassword(password)))
-      return res.status(401).json({ error: 'Password does not match' });
+      return res.status(401).json({ error: 'Senha incorreta' });
 
     const { id, name, provider, avatar } = user;
 
