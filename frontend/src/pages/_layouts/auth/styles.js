@@ -58,6 +58,11 @@ export const Content = styled.div`
         background: ${darken(0.03, '#3b9eff')};
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       }
+
+      &:disabled {
+        background: ${darken(0.08, '#3b9eff')};
+        box-shadow: none;
+      }
     }
 
     a {
