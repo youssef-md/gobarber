@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import Notifications from '../Notifications';
+
 import { Container, Content, Profile } from './styles';
 import logo from '../../assets/logo-purple.svg';
 
@@ -14,7 +16,7 @@ export default function Header() {
         </nav>
 
         <aside>
-          Notificação
+          <Notifications />
           <Profile>
             <div>
               <strong>Youssef Muhamad</strong>
