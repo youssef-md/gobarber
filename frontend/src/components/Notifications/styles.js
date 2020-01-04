@@ -11,8 +11,8 @@ export const Badge = styled.button`
   border: 0;
   position: relative;
 
-  ${props =>
-    props.hasUnread &&
+  ${({ hasUnread }) =>
+    hasUnread &&
     css`
       &::after {
         content: '';
@@ -29,12 +29,13 @@ export const Badge = styled.button`
 
 export const NotificationList = styled.div`
   position: absolute;
-  width: 250px;
-  left: calc(50% - 125px);
+  width: 300px;
+  left: calc(50% - 150px);
   top: calc(100% + 30px);
   background: rgba(0, 0, 0, 0.6);
   border-radius: 4px;
   padding: 15px 6px;
+  display: ${({ visible }) => (visible ? 'block' : 'none')};
 
   &::before {
     content: '';
@@ -57,7 +58,7 @@ export const Scroll = styled(PerfectScrollbar)`
 export const Notification = styled.div`
   color: #fff;
 
-  &:not(:first-child) {
+  & + div {
     margin-top: 15px;
     padding-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -71,30 +72,33 @@ export const Notification = styled.div`
   time {
     opacity: 0.6;
     font-size: 12px;
+    display: block;
   }
 
   button {
     font-size: 12px;
+    font-weight: bold;
+    color: ${lighten(0.2, `#7159c1`)};
     border: 0;
     background: none;
-    color: ${lighten(0.2, `#7159c1`)};
-    font-weight: bold;
-    padding: 0 12px;
-    margin: 0 12px;
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
-  }
+    width: 100%;
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  ${props =>
-    props.unread &&
-    css`
-      &::after {
-        content: '';
-        display: inline-block;
-        margin-left: 5px;
-        width: 10px;
-        height: 10px;
-        background: #ff892e;
-        border-radius: 50%;
-      }
-    `}
+    ${({ unread }) =>
+      unread &&
+      css`
+        &::after {
+          content: '';
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background: #ff892e;
+          border-radius: 50%;
+          align-self: flex-end;
+        }
+      `}
+  }
 `;
