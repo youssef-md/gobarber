@@ -3,3 +3,5 @@ node_modules/
 tmp/uploads/*.jpeg
 tmp/uploads/*.jpg
 tmp/uploads/*.png
+tmp/uploads/*.svg
+
