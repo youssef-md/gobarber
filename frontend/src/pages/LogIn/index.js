@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Input } from '@rocketseat/unform';
+import { Input } from '@rocketseat/unform';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
+import { DefaultForm } from '../../styles/form';
 import { signInRequest } from '../../store/modules/auth/actions';
-
 import logo from '../../assets/logo.svg';
 
 const schema = Yup.object().shape({
@@ -28,7 +28,7 @@ export default function LogIn() {
   return (
     <>
       <img src={logo} alt="Go Barber logo" />
-      <Form schema={schema} onSubmit={handleSubmit}>
+      <DefaultForm schema={schema} onSubmit={handleSubmit}>
         <Input name="email" type="email" placeholder="Seu e-mail" />
         <Input
           name="password"
@@ -40,7 +40,7 @@ export default function LogIn() {
           {loading ? 'Carregando...' : 'Acessar'}
         </button>
         <Link to="/register">Criar sua conta gratuita</Link>
-      </Form>
+      </DefaultForm>
     </>
   );
 }
