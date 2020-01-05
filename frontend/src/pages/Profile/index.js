@@ -1,15 +1,19 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Input } from '@rocketseat/unform';
 
 import { Container } from './styles';
 import { DefaultForm } from '../../styles/form';
 
+import { updateProfileRequest } from '../../store/modules/user/actions';
+
 export default function Profile() {
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
+  const loading = useSelector(state => state.user.loading);
 
   function handleSubmit(data) {
-    console.log(data);
+    dispatch(updateProfileRequest(data));
   }
 
   return (
@@ -32,7 +36,9 @@ export default function Profile() {
           placeholder="Confirme sua nova senha"
         />
 
-        <button type="submit">Atualizar perfil</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Carregando...' : 'Atualizar perfil'}
+        </button>
       </DefaultForm>
 
       <button type="button">Sair do GoBarber</button>
