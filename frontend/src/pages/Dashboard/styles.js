@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 700px;
-  margin: 50px auto;
+  margin: 80px auto;
 
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@ export const Container = styled.div`
 
   ul {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
     margin-top: 30px;
   }
@@ -42,7 +42,6 @@ export const Time = styled.li`
     display: block;
     color: ${({ available }) => (available ? '#999' : '#7159c1')};
     font-size: 20px;
-    font-weight: normal;
   }
 
   span {

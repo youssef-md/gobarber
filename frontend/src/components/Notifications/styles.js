@@ -32,7 +32,8 @@ export const NotificationList = styled.div`
   width: 300px;
   left: calc(50% - 150px);
   top: calc(100% + 30px);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 100;
   border-radius: 4px;
   padding: 15px 6px;
   display: ${({ visible }) => (visible ? 'block' : 'none')};
