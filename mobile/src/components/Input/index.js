@@ -1,17 +1,22 @@
 import React, {forwardRef} from 'react';
 
-import {Container, TxtInput, IconBackground, CustomIcon} from './styles';
+import {
+  StyledContainer,
+  StyledTextInput,
+  IconBackground,
+  StyledIcon,
+} from './styles';
 
 function Input({style, icon, ...rest}, ref) {
   return (
-    <Container style={style}>
+    <StyledContainer style={style}>
       {icon && (
         <IconBackground>
-          <CustomIcon name={icon} />
+          <StyledIcon name={icon} />
         </IconBackground>
       )}
-      <TxtInput {...rest} ref={ref} />
-    </Container>
+      <StyledTextInput {...rest} ref={ref} />
+    </StyledContainer>
   );
 }
 
