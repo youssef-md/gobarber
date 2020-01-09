@@ -4,7 +4,7 @@ import {darken} from 'polished';
 
 export const StyledContainer = styled.View`
   /* padding: 0 15px; */
-  height: 50px;
+  height: 48px;
   background: rgba(0, 0, 0, 0.2);
   flex-direction: row;
   align-items: center;
@@ -23,7 +23,7 @@ export const IconBackground = styled.View`
 
 export const StyledIcon = styled(Icon).attrs(({name}) => ({
   name,
-  size: 25,
+  size: 20,
   color: darken(0.05, '#7159c1'),
 }))``;
 
