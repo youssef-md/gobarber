@@ -1,20 +1,11 @@
 import React, {forwardRef} from 'react';
 
-import {
-  StyledContainer,
-  StyledTextInput,
-  IconBackground,
-  StyledIcon,
-} from './styles';
+import {StyledContainer, StyledTextInput, StyledIcon} from './styles';
 
 function Input({style, icon, ...rest}, ref) {
   return (
     <StyledContainer style={style}>
-      {icon && (
-        <IconBackground>
-          <StyledIcon name={icon} />
-        </IconBackground>
-      )}
+      {icon && <StyledIcon name={icon} />}
       <StyledTextInput {...rest} ref={ref} />
     </StyledContainer>
   );
