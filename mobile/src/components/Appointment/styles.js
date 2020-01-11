@@ -1,15 +1,15 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  margin-top: 15px;
-  padding: 20px;
-  border-radius: 4px;
-  background: #fff;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: 15px;
+  padding: 20px;
+  border-radius: 4px;
+  background: #fff;
+  opacity: ${({past}) => (past ? 0.6 : 1)};
 `;
 
 export const Left = styled.View`

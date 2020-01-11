@@ -6,7 +6,7 @@ import pt from 'date-fns/locale/pt';
 
 import {Container, Left, Avatar, Info, Name, Time} from './styles';
 
-export default function Appointment({appointment}) {
+export default function Appointment({appointment, onCancel}) {
   const parsedDate = useMemo(
     () =>
       formatRelative(parseISO(appointment.date), new Date(), {
@@ -36,7 +36,7 @@ export default function Appointment({appointment}) {
       </Left>
 
       {appointment.cancelable && (
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={onCancel}>
           <Icon name="event-busy" size={22} color="#f64c75" />
         </TouchableOpacity>
       )}
