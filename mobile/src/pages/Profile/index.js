@@ -1,13 +1,18 @@
 import React, {useState, useRef} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import {updateProfileRequest} from '../../store/modules/user/actions';
 import Background from '../../components/Background';
 import {Container, Title, Form, Separator} from './styles';
 import {FormInput, SubmitButton} from '../../styles/auth';
 
 export default function Profile() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
+  const {profile, loading} = useSelector(state => state.user);
+
+  const [name, setName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -17,7 +22,17 @@ export default function Profile() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
-  async function handleSubmit() {}
+  async function handleSubmit() {
+    dispatch(
+      updateProfileRequest({
+        name,
+        email,
+        oldPassword,
+        password,
+        confirmPassword,
+      }),
+    );
+  }
 
   return (
     <Background>
@@ -84,7 +99,9 @@ export default function Profile() {
             onChangeText={setConfirmPassword}
           />
 
-          <SubmitButton onPress={handleSubmit}>Atualizar perfil</SubmitButton>
+          <SubmitButton onPress={handleSubmit} loading={loading}>
+            Atualizar perfil
+          </SubmitButton>
         </Form>
       </Container>
     </Background>
