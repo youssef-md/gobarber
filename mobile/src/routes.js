@@ -26,11 +26,28 @@ export default function(logged = false) {
           {
             Dashboard,
             NewAppointment: {
-              screen: createStackNavigator({
-                SelectProvider,
-                SelectDateTime,
-                ConfirmAppointment,
-              }),
+              screen: createStackNavigator(
+                {
+                  SelectProvider,
+                  SelectDateTime,
+                  ConfirmAppointment,
+                },
+                {
+                  defaultNavigationOptions: {
+                    headerTransparent: true,
+                    headerTintColor: '#fff',
+                    headerLeftContainerStyle: {
+                      paddingTop: 30,
+                      marginLeft: 20,
+                    },
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                      fontWeight: 'bold',
+                      paddingTop: 30,
+                    },
+                  },
+                },
+              ),
               navigationOptions: {
                 tabBarVisible: false,
                 tabBarLabel: 'Agendar',
