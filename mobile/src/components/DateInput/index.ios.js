@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import {View, DatePickerIOS} from 'react-native';
+import {DatePickerIOS} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {format} from 'date-fns';
 import pt from 'date-fns/locale/pt';

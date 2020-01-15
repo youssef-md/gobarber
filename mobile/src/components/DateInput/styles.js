@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   margin: 60px 0 30px;
+  padding: 20px;
 `;
 
 export const DateButton = styled.TouchableOpacity`
@@ -14,7 +15,7 @@ export const DateButton = styled.TouchableOpacity`
 `;
 
 export const DateEvent = styled.Text`
-  size: 14px;
+  font-size: 14px;
   color: #fff;
   margin-left: 15px;
 `;
