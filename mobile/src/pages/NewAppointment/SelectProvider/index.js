@@ -13,7 +13,7 @@ import {
   Hairline,
 } from './styles';
 
-export default function SelectProvider() {
+export default function SelectProvider({navigation}) {
   const [providers, setProviders] = useState([]);
 
   useEffect(() => {
@@ -32,7 +32,8 @@ export default function SelectProvider() {
           data={providers}
           keyExtractor={({id}) => String(id)}
           renderItem={({item: provider}) => (
-            <Provider>
+            <Provider
+              onPress={() => navigation.navigate('SelectDateTime', {provider})}>
               <Avatar
                 source={{
                   uri: provider.avatar
