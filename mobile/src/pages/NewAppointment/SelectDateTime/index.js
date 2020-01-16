@@ -24,10 +24,10 @@ export default function SelectDateTime({navigation}) {
     loadAvailable();
   }, [date, provider.id]);
 
-  function handleSelectHour(hour) {
+  function handleSelectDateTime(datetime) {
     navigation.navigate('ConfirmAppointment', {
       provider,
-      hour,
+      datetime,
     });
   }
 
@@ -41,7 +41,7 @@ export default function SelectDateTime({navigation}) {
           keyExtractor={({time}) => time}
           renderItem={({item}) => (
             <Hour
-              onPress={() => handleSelectHour(item.value)}
+              onPress={() => handleSelectDateTime(item.value)}
               enabled={item.available}>
               <Title>{item.time}</Title>
             </Hour>
