@@ -14,31 +14,33 @@ import AvailableController from './app/controllers/AvailableController';
 
 import validateUserStore from './app/validators/UserStore';
 import validateUserUpdate from './app/validators/UserUpdate';
+import validateSessionStore from './app/validators/SessionStore';
 
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
-routes.post('/users', validateUserStore, UserController.store);
-routes.post('/sessions', SessionController.store);
+routes.post('/users', validateUserStore, UserController.store); // SignUp
+routes.post('/sessions', validateSessionStore, SessionController.store); // Login
 
 routes.use(authMiddleware); // Global token validator
 
-routes.put('/users', validateUserUpdate, UserController.update);
+routes.put('/users', validateUserUpdate, UserController.update); // User update
 
-routes.get('/providers', ProviderController.index);
-routes.get('/providers/:providerId/available', AvailableController.index);
+routes.get('/providers', ProviderController.index); // Get all Providers
 
-routes.post('/files', upload.single('file'), FileController.store);
+routes.get('/providers/:providerId/available', AvailableController.index); // Get all Available time from a Provider
 
-routes.get('/appointments', AppointmentController.index);
-routes.post('/appointments', AppointmentController.store);
-routes.delete('/appointments/:id', AppointmentController.delete);
+routes.post('/files', upload.single('file'), FileController.store); // Upload Picture
 
-routes.get('/schedule', ScheduleController.index);
+routes.get('/appointments', AppointmentController.index); // Get all User Appointment
+routes.post('/appointments', AppointmentController.store); // Create an Appointment with a Provider
+routes.delete('/appointments/:id', AppointmentController.delete); // Cancel an Appointment with a Provider
 
-routes.get('/notifications', NotificationController.index);
-routes.put('/notifications/:id', NotificationController.update);
+routes.get('/schedule', ScheduleController.index); // List Provider's schedule in a given date
+
+routes.get('/notifications', NotificationController.index); // Get all Notifications from a Provider
+routes.put('/notifications/:id', NotificationController.update); // Mark a Notification as read
 
 export default routes;
