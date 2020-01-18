@@ -13,6 +13,7 @@ import NotificationController from './app/controllers/NotificationController.js'
 import AvailableController from './app/controllers/AvailableController';
 
 import validateUserStore from './app/validators/UserStore';
+import validateUserUpdate from './app/validators/UserUpdate';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -24,7 +25,7 @@ routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware); // Global token validator
 
-routes.put('/users', UserController.update);
+routes.put('/users', validateUserUpdate, UserController.update);
 
 routes.get('/providers', ProviderController.index);
 routes.get('/providers/:providerId/available', AvailableController.index);
