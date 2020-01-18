@@ -15,6 +15,7 @@ import AvailableController from './app/controllers/AvailableController';
 import validateUserStore from './app/validators/UserStore';
 import validateUserUpdate from './app/validators/UserUpdate';
 import validateSessionStore from './app/validators/SessionStore';
+import validateAppointmentStore from './app/validators/AppointmentStore';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -35,7 +36,11 @@ routes.get('/providers/:providerId/available', AvailableController.index); // Ge
 routes.post('/files', upload.single('file'), FileController.store); // Upload Picture
 
 routes.get('/appointments', AppointmentController.index); // Get all User Appointment
-routes.post('/appointments', AppointmentController.store); // Create an Appointment with a Provider
+routes.post(
+  '/appointments',
+  validateAppointmentStore,
+  AppointmentController.store
+); // Create an Appointment with a Provider
 routes.delete('/appointments/:id', AppointmentController.delete); // Cancel an Appointment with a Provider
 
 routes.get('/schedule', ScheduleController.index); // List Provider's schedule in a given date
