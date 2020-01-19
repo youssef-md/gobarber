@@ -3,6 +3,7 @@ import Appointment from '../models/Appointment';
 import User from '../models/User';
 import Queue from '../../lib/Queue';
 import CancelationMail from '../jobs/CancelationMail';
+import Cache from '../../lib/Cache';
 
 class CancelAppointmentService {
   async run({ appointment_id, user_id }) {
@@ -35,6 +36,9 @@ class CancelAppointmentService {
     Queue.enqueue(CancelationMail.key, {
       appointment,
     });
+
+    // Invalidate Cache
+    await Cache.invalidateWithPrefix(`user:${user_id}:appointments`);
 
     return appointment;
   }
