@@ -5,6 +5,7 @@ import cors from 'cors';
 import Youch from 'youch';
 import 'express-async-errors';
 import * as Sentry from '@sentry/node';
+import helmet from 'helmet';
 
 import routes from './routes';
 import './database'; // create sequelize connection and load all models
@@ -30,6 +31,7 @@ class App {
       '/files',
       express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
     );
+    this.server.use(helmet());
   }
 
   routes() {

@@ -22,6 +22,7 @@ import validateAppointmentStore from './app/validators/AppointmentStore';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+
 const upload = multer(multerConfig);
 
 const bruteStore = new BruteRedis({
