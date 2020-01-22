@@ -1,8 +1,6 @@
 import React, {useMemo} from 'react';
 import {formatRelative, parseISO} from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Icon} from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '../../../components/Background';
 import {Container, Avatar, DateTime, Name, SubmitButton} from './styles';

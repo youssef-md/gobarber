@@ -23,7 +23,7 @@ export default function SelectProvider({navigation}) {
     }
 
     loadProviders();
-  });
+  }, []);
 
   return (
     <Background>

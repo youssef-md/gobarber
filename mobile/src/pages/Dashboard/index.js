@@ -22,7 +22,7 @@ function Dashboard({isFocused}) {
   }
 
   function handleCancel(id) {
-    const appointment = appointments.find(appointment => appointment.id === id);
+    const appointment = appointments.find(a => a.id === id);
 
     Alert.alert(
       `Cancelar agendamento`,
@@ -32,9 +32,7 @@ function Dashboard({isFocused}) {
           text: 'Sim, quero cancelar',
           onPress: async () => {
             await api.delete(`appointments/${id}`);
-            setAppointments(
-              appointments.filter(appointment => appointment.id !== id),
-            );
+            setAppointments(appointments.filter(a => a.id !== id));
           },
         },
       ],
