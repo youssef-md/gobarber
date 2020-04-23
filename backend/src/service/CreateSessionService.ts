@@ -3,6 +3,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
 import User from '../models/User';
+import authConfig from '../config/auth';
 
 interface Request {
   email: string;
@@ -25,9 +26,10 @@ class CreateSessionService {
     const passwordMatched = await compare(password, user.password);
     if (!passwordMatched) throw new Error('Incorrect password');
 
-    const token = sign({}, 'c05ac142b7b12426cefb43e81caf7ad1', {
+    const { secret, expiresIn } = authConfig.jwt;
+    const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: '1d',
+      expiresIn,
     });
 
     delete user.password;
