@@ -1,22 +1,23 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: #232129;
-  border-radius: 10px;
-  border: 2px solid #232119;
-  padding: 16px;
-  width: 100%;
-  color: #666;
   display: flex;
   align-items: center;
+  width: 100%;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 2px solid #232119;
+  background: #232129;
+  color: #666;
 
   & + div {
     margin-top: 10px;
   }
 
   input {
-    background: transparent;
     flex: 1;
+    padding: 16px 0;
+    background: transparent;
     border: 0;
     color: #f2f2f2;
 
