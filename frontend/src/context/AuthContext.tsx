@@ -1,5 +1,10 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useState, useContext } from 'react';
 import api from '../services/api';
+
+interface AuthContextShape {
+  user: object;
+  signIn(credentials: SignInCredential): Promise<void>;
+}
 
 interface AuthState {
   token: string;
@@ -9,11 +14,6 @@ interface AuthState {
 interface SignInCredential {
   email: string;
   password: string;
-}
-
-interface AuthContextShape {
-  user: object;
-  signIn(credentials: SignInCredential): Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextShape>({} as AuthContextShape);
@@ -47,4 +47,12 @@ const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+function useAuth(): AuthContextShape {
+  const context = useContext(AuthContext);
+
+  if (!context) throw new Error('useAuth must be used within as AuthProvider');
+
+  return context;
+}
+
+export { AuthProvider, useAuth };
