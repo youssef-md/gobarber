@@ -1,60 +1,34 @@
 import React from 'react';
 import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
+
 import { Container, Toast } from './styles';
+import { ToastMessage, useToast } from '../../hooks/toast';
 
-const ToastContainer: React.FC = () => (
-  <Container>
-    <Toast hasDescription>
-      <FiAlertCircle size={20} />
+interface ToastContainerProps {
+  toasts: ToastMessage[];
+}
 
-      <div>
-        <strong>Aconteceu um erro</strong>
-        <p>Nao foi possível fazer login na aplicação</p>
-      </div>
+const ToastContainer: React.FC<ToastContainerProps> = ({ toasts }) => {
+  const { removeToast } = useToast();
 
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
+  return (
+    <Container>
+      {toasts.map(({ id, title, description, type }) => (
+        <Toast key={id} hasDescription={!!description} type={type}>
+          <FiAlertCircle size={20} />
 
-    <Toast type="success" hasDescription>
-      <FiAlertCircle size={20} />
+          <div>
+            <strong>{title}</strong>
+            {description && <p>{description}</p>}
+          </div>
 
-      <div>
-        <strong>Aconteceu um erro</strong>
-        <p>Nao foi possível fazer login na aplicação</p>
-      </div>
-
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
-
-    <Toast type="error" hasDescription>
-      <FiAlertCircle size={20} />
-
-      <div>
-        <strong>Aconteceu um erro</strong>
-        <p>Nao foi possível fazer login na aplicação</p>
-      </div>
-
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
-
-    <Toast type="error" hasDescription={false}>
-      <FiAlertCircle size={20} />
-
-      <div>
-        <strong>Aconteceu um erro</strong>
-      </div>
-
-      <button type="button">
-        <FiXCircle size={18} />
-      </button>
-    </Toast>
-  </Container>
-);
+          <button type="button" onClick={() => removeToast(id)}>
+            <FiXCircle size={18} />
+          </button>
+        </Toast>
+      ))}
+    </Container>
+  );
+};
 
 export default ToastContainer;
