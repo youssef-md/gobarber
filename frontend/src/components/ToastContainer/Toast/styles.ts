@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { animated } from 'react-spring';
+
 interface ContainerProps {
   type?: 'success' | 'error' | 'info';
   hasDescription: boolean;
@@ -20,7 +22,7 @@ const toastVariations = {
   `,
 };
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled(animated.div)<ContainerProps>`
   & + div {
     margin-top: 8px;
   }
