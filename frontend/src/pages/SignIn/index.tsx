@@ -4,6 +4,7 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as yup from 'yup';
 
+import { Link } from 'react-router-dom';
 import { Container, Content, Background } from './styles';
 import logo from '../../assets/logo.svg';
 import Input from '../../components/Input';
@@ -45,6 +46,8 @@ const SignIn: React.FC = () => {
         if (error instanceof yup.ValidationError) {
           const errors = getValidationErrors(error);
           formRef.current?.setErrors(errors);
+
+          return; // won't show toast
         }
 
         const errorMessage = error.response
@@ -80,10 +83,10 @@ const SignIn: React.FC = () => {
 
           <a href="forgot">Esqueci minha senha</a>
         </Form>
-        <a href="create">
+        <Link to="/signup">
           <FiLogIn />
           Criar uma conta
-        </a>
+        </Link>
       </Content>
       <Background />
     </Container>

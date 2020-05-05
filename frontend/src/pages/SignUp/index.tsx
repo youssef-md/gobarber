@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 
+import { Link } from 'react-router-dom';
 import getValidationErrors from '../../utils/getValidationsErrors';
 
 import { Container, Content, Background } from './styles';
@@ -45,7 +46,7 @@ const SignUp: React.FC = () => {
         <img src={logo} alt="Go Barber" />
 
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <h2>Faça seu logon</h2>
+          <h2>Faça seu cadastro</h2>
           <Input name="name" icon={FiUser} placeholder="Nome" />
           <Input name="email" icon={FiMail} placeholder="E-mail" />
           <Input
@@ -56,10 +57,10 @@ const SignUp: React.FC = () => {
           />
           <Button type="submit">Cadastrar</Button>
         </Form>
-        <a href="create">
+        <Link to="/">
           <FiArrowLeft />
           Voltar para logon
-        </a>
+        </Link>
       </Content>
     </Container>
   );
