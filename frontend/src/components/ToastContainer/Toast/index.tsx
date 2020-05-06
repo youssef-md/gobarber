@@ -1,50 +1,44 @@
 import React, { useEffect } from 'react';
-import {
-  FiAlertCircle,
-  FiXCircle,
-  FiInfo,
-  FiCheckCircle,
-} from 'react-icons/fi';
+import { FiAlertCircle, FiInfo, FiCheckCircle, FiX } from 'react-icons/fi';
 
 import { Container } from './styles';
-import { ToastMessage, useToast } from '../../../hooks/toast';
+import { ToastState, useToast } from '../../../hooks/toast';
 
 interface ToastProps {
-  toast: ToastMessage;
   style: object;
+  toast: ToastState;
 }
 
 const icons = {
   info: <FiInfo size={24} />,
-  error: <FiAlertCircle size={24} />,
   success: <FiCheckCircle size={24} />,
+  error: <FiAlertCircle size={24} />,
 };
 
-const Toast: React.FC<ToastProps> = ({ toast, style }) => {
-  const { id, type, title, description } = toast;
+const Toast: React.FC<ToastProps> = ({
+  style,
+  toast: { id, type, description, title },
+}) => {
   const { removeToast } = useToast();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      removeToast(id);
-    }, 3000);
+    const timer = setTimeout(() => removeToast(id), 3000);
 
-    return () => {
-      clearTimeout(timer); // if the user closed the timer before 3s
+    return function cleanTimerIfUserClosesToastBefore() {
+      clearTimeout(timer);
     };
-  }, [removeToast, id]);
+  }, []);
 
   return (
-    <Container style={style} hasDescription={!!description} type={type}>
-      {icons[type || 'info']}
-
+    <Container type={type} hasDescription={!!description} style={style}>
+      {icons[type]}
       <div>
         <strong>{title}</strong>
-        {description && <p>{description}</p>}
+        {!!description && <p>{description}</p>}
       </div>
 
       <button type="button" onClick={() => removeToast(id)}>
-        <FiXCircle size={18} />
+        <FiX size={20} />
       </button>
     </Container>
   );

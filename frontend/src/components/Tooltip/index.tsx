@@ -1,17 +1,23 @@
 import React from 'react';
-import { Container } from './styled';
+import { FiAlertCircle } from 'react-icons/fi';
+
+import { Container } from './styles';
 
 interface TooltipProps {
-  title: string;
+  type?: 'error' | 'default';
+  message: string;
   className?: string;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ title, className, children }) => {
-  return (
-    <Container className={className}>
-      {children}
-      <span>{title}</span>
-    </Container>
-  );
-};
+const Tooltip: React.FC<TooltipProps> = ({
+  type = 'default',
+  message,
+  className,
+}) => (
+  <Container className={className} type={type}>
+    <FiAlertCircle size={22} />
+    <span>{message}</span>
+  </Container>
+);
+
 export default Tooltip;

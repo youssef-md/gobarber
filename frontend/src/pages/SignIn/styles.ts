@@ -1,75 +1,60 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-import signInBackgroundImg from '../../assets/sign-in-background.png';
+import signInBackground from '../../assets/sign-in-background.png';
+import { appearFromLeft, fadeIn } from '../../styles/keyframes';
 
 export const Container = styled.div`
   height: 100vh;
-
   display: flex;
   align-items: stretch;
-`;
-
-const appearFromLeft = keyframes`
-  from {
-    opacity: 0;
-    transform: translatex(-100px)
-  }
-
-  to {
-    opacity: 1;
-    transform: translatex(0px)
-  }
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: center;
   align-items: center;
 
+  /* Use 100% of the space for the content until exceeds 700px, then let the image grow based on the flex: 1 */
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
 
-  animation: ${appearFromLeft} 0.7s;
+  animation: ${appearFromLeft} 0.6s;
 
   form {
-    margin: 70px 0;
-    width: 340px;
-    text-align: center;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
 
     h2 {
-      margin-bottom: 24px;
+      font-size: 26px;
+      margin-bottom: 30px;
     }
 
     a {
-      color: #f2f2f2;
-      text-decoration: none;
       display: block;
-      margin-top: 14px;
+      margin: 25px 0 35px 0;
+      color: #f4ede8;
+      text-decoration: none;
       transition: color 0.2s;
-      padding: 10px 0;
 
       &:hover {
-        color: ${shade(0.2, '#f2f2f2')};
+        color: ${shade(0.2, '#f4ede8')};
       }
     }
   }
 
   > a {
-    color: #ff9000;
-    text-decoration: none;
-    display: block;
-    margin-top: 14px;
-    transition: color 0.2s;
-    padding: 10px 0;
-
     display: flex;
     align-items: center;
+    margin-top: 34px;
+    color: #ff9000;
 
-    svg {
-      margin-right: 15px;
+    > svg {
+      margin-right: 10px;
       transition: transform 0.2s;
     }
 
@@ -78,25 +63,15 @@ export const Content = styled.div`
     }
 
     &:hover svg {
-      transform: translateX(8px);
+      transform: translateX(5px);
     }
-  }
-`;
-
-const appear = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 `;
 
 export const Background = styled.div`
   flex: 1;
-  background: url(${signInBackgroundImg}) no-repeat center;
+  background: url(${signInBackground}) no-repeat center;
   background-size: cover;
 
-  animation: ${appear} 1s;
+  animation: ${fadeIn} 0.5s;
 `;

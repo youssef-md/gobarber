@@ -1,71 +1,54 @@
 import styled, { css } from 'styled-components';
-
 import { animated } from 'react-spring';
 
 interface ContainerProps {
-  type?: 'success' | 'error' | 'info';
+  type: 'info' | 'success' | 'error';
   hasDescription: boolean;
 }
 
-const toastVariations = {
+const variations = {
   info: css`
     background: #ebf8ff;
     color: #3172b7;
-  `,
-  success: css`
-    background: #e6fffa;
-    color: #2e656a;
   `,
   error: css`
     background: #fddede;
     color: #c53030;
   `,
+  success: css`
+    background: #e6fffa;
+    color: #2e656a;
+  `,
 };
 
 export const Container = styled(animated.div)<ContainerProps>`
-  & + div {
-    margin-top: 8px;
-  }
-
-  width: 360px;
   position: relative;
-  padding: 16px 30px 16px 16px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  width: 360px;
   display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 
-  ${(props) => toastVariations[props.type || 'info']}
-
-  > svg {
-    margin: 4px 12px 0 0;
+  ${({ type }) => variations[type]} & +
+    div {
+    margin-top: 8px;
   }
 
   div {
     flex: 1;
+    margin: 0 10px;
 
     p {
-      margin-top: 4px;
-      font-size: 14px;
-      line-height: 20px;
+      margin-top: 7px;
     }
   }
 
   button {
-    position: absolute;
-    top: 18px;
-    right: 16px;
-    background: transparent;
+    background: none;
     border: 0;
     color: inherit;
+    position: absolute;
+    right: 14px;
   }
-
-  ${(props) =>
-    !props.hasDescription &&
-    css`
-      align-items: center;
-
-      svg {
-        margin-top: 0;
-      }
-    `}
 `;
