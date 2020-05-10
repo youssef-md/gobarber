@@ -1,8 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -19,10 +21,15 @@ import logoImg from '../../assets/logo.png';
 
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
+  const formRef = useRef<FormHandles>(null);
 
   const navigateToSignUp = useCallback(() => {
     navigation.navigate('SignUp');
   }, [navigation]);
+
+  const handleSignInSubmit = useCallback((data) => {
+    console.log(data);
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -37,19 +44,27 @@ const SignIn: React.FC = () => {
         <Container>
           <Image source={logoImg} />
           <Title>Faça seu login</Title>
-          <Input
-            name="email"
-            icon="mail"
-            placeholder="Digite seu email..."
-            autoCompleteType="off"
-            autoCapitalize="none"
-          />
-          <Input
-            name="password"
-            icon="lock"
-            placeholder="Digite sua senha..."
-          />
-          <Button onPress={() => Alert.alert('oi')}>ENTRAR</Button>
+          <Form ref={formRef} onSubmit={handleSignInSubmit}>
+            <Input
+              name="email"
+              icon="mail"
+              placeholder="Digite seu email..."
+              autoCompleteType="off"
+              autoCapitalize="none"
+            />
+            <Input
+              name="password"
+              icon="lock"
+              placeholder="Digite sua senha..."
+            />
+            <Button
+              onPress={() => {
+                formRef.current?.submitForm();
+              }}
+            >
+              ENTRAR
+            </Button>
+          </Form>
 
           <ForgotPassword>
             <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>

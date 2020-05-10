@@ -1,8 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -12,10 +14,15 @@ import logoImg from '../../assets/logo.png';
 
 const SignUp: React.FC = () => {
   const navigation = useNavigation();
+  const formRef = useRef<FormHandles>(null);
 
   const navigateBackToSignIn = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
+
+  const handleSignUpSubmit = useCallback((data) => {
+    console.log(data);
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -30,20 +37,25 @@ const SignUp: React.FC = () => {
         <Container>
           <Image source={logoImg} />
           <Title>Faça seu cadastro</Title>
-          <Input name="name" icon="user" placeholder="Digite seu nome..." />
-          <Input
-            name="email"
-            icon="mail"
-            placeholder="Digite seu email..."
-            autoCompleteType="off"
-            autoCapitalize="none"
-          />
-          <Input
-            name="password"
-            icon="lock"
-            placeholder="Digite sua senha..."
-          />
-          <Button onPress={() => Alert.alert('oi')}>CADASTRAR</Button>
+
+          <Form ref={formRef} onSubmit={handleSignUpSubmit}>
+            <Input name="name" icon="user" placeholder="Digite seu nome..." />
+            <Input
+              name="email"
+              icon="mail"
+              placeholder="Digite seu email..."
+              autoCompleteType="off"
+              autoCapitalize="none"
+            />
+            <Input
+              name="password"
+              icon="lock"
+              placeholder="Digite sua senha..."
+            />
+            <Button onPress={() => formRef.current?.submitForm()}>
+              CADASTRAR
+            </Button>
+          </Form>
 
           <GoBack onPress={navigateBackToSignIn}>
             <Icon name="arrow-left" size={20} color="#f4ede8" />
