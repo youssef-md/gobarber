@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-
 import { ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
@@ -17,6 +18,12 @@ import {
 import logoImg from '../../assets/logo.png';
 
 const SignIn: React.FC = () => {
+  const navigation = useNavigation();
+
+  const navigateToSignUp = useCallback(() => {
+    navigation.navigate('SignUp');
+  }, [navigation]);
+
   return (
     <KeyboardAvoidingView
       enabled
@@ -47,7 +54,8 @@ const SignIn: React.FC = () => {
           <ForgotPassword>
             <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
           </ForgotPassword>
-          <CreateAccount>
+
+          <CreateAccount onPress={navigateToSignUp}>
             <Icon name="log-in" size={20} color="#ff9000" />
             <CreateAccountText>Criar uma conta</CreateAccountText>
           </CreateAccount>
