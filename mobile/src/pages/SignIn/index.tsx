@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -22,6 +22,7 @@ import logoImg from '../../assets/logo.png';
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
+  const passwordRef = useRef<TextInput>(null);
 
   const navigateToSignUp = useCallback(() => {
     navigation.navigate('SignUp');
@@ -30,6 +31,15 @@ const SignIn: React.FC = () => {
   const handleSignInSubmit = useCallback((data) => {
     console.log(data);
   }, []);
+
+  const handleFormSubmitViaRef = useCallback(() => {
+    formRef.current?.submitForm();
+  }, [formRef]);
+
+  const focusPasswordInputViaRef = useCallback(() => {
+    // .focus() will call the defined method from useImperativeHandle inside Input
+    passwordRef.current?.focus();
+  }, [passwordRef]);
 
   return (
     <KeyboardAvoidingView
@@ -50,20 +60,24 @@ const SignIn: React.FC = () => {
               icon="mail"
               placeholder="Digite seu email..."
               autoCompleteType="off"
+              autoCorrect={false}
               autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={focusPasswordInputViaRef}
             />
+
             <Input
+              ref={passwordRef}
               name="password"
               icon="lock"
               placeholder="Digite sua senha..."
+              secureTextEntry
+              returnKeyType="send"
+              onSubmitEditing={handleFormSubmitViaRef}
             />
-            <Button
-              onPress={() => {
-                formRef.current?.submitForm();
-              }}
-            >
-              ENTRAR
-            </Button>
+
+            <Button onPress={handleFormSubmitViaRef}>ENTRAR</Button>
           </Form>
 
           <ForgotPassword>
