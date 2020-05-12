@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
@@ -16,12 +16,27 @@ const SignUp: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
 
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+
   const navigateBackToSignIn = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
   const handleSignUpSubmit = useCallback((data) => {
     console.log(data);
+  }, []);
+
+  const handleFormSubmitViaRef = useCallback(() => {
+    formRef.current?.submitForm();
+  }, [formRef]);
+
+  const handleEmailInputFocusViaRef = useCallback(() => {
+    emailRef.current?.focus();
+  }, []);
+
+  const handlePasswordInputFocusViaRef = useCallback(() => {
+    emailRef.current?.focus();
   }, []);
 
   return (
@@ -39,22 +54,40 @@ const SignUp: React.FC = () => {
           <Title>Faça seu cadastro</Title>
 
           <Form ref={formRef} onSubmit={handleSignUpSubmit}>
-            <Input name="name" icon="user" placeholder="Digite seu nome..." />
             <Input
+              name="name"
+              icon="user"
+              placeholder="Digite seu nome..."
+              autoCorrect
+              autoCapitalize="words"
+              returnKeyType="next"
+              onSubmitEditing={handleEmailInputFocusViaRef}
+            />
+
+            <Input
+              ref={emailRef}
               name="email"
               icon="mail"
               placeholder="Digite seu email..."
               autoCompleteType="off"
               autoCapitalize="none"
+              keyboardType="email-address"
+              returnKeyType="next"
+              onSubmitEditing={handlePasswordInputFocusViaRef}
             />
+
             <Input
+              ref={passwordRef}
               name="password"
               icon="lock"
               placeholder="Digite sua senha..."
+              secureTextEntry
+              textContentType="newPassword"
+              returnKeyType="send"
+              onSubmitEditing={handleFormSubmitViaRef}
+              // textContentType="oneTimeCode" -> vai pegar a SMS que chegou e preencher o input automatico
             />
-            <Button onPress={() => formRef.current?.submitForm()}>
-              CADASTRAR
-            </Button>
+            <Button onPress={handleFormSubmitViaRef}>CADASTRAR</Button>
           </Form>
 
           <GoBack onPress={navigateBackToSignIn}>
