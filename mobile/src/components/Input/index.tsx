@@ -3,6 +3,8 @@ import React, {
   useEffect,
   useImperativeHandle,
   forwardRef,
+  useState,
+  useCallback,
 } from 'react';
 import { TextInputProperties } from 'react-native';
 import { useField } from '@unform/core';
@@ -25,6 +27,9 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   { name, icon, ...rest },
   ref
 ) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
   const { fieldName, registerField, defaultValue = '', error } = useField(name);
 
   const inputValueRef = useRef<InputValueReference>({ value: defaultValue }); // handle input value
@@ -50,7 +55,8 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     [registerField, inputValueRef, fieldName]
   );
 
-  // We are using inputElementRef to synchronize a possible setting and cleaning via Unform, so we'll use the useImperativeHandle
+  // Override the ref.focus, instead of calling it in TextInput(which already have a ref for unform setting and cleaning) we'll
+  // get this ref.focus() and run our focus() method bellow, specifying via what ref it'll focus
   useImperativeHandle(ref, function defineFocusMethodToInputRef() {
     return {
       focus() {
@@ -59,17 +65,32 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     };
   });
 
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false);
+    setIsFilled(!!inputValueRef.current.value);
+  }, []);
+
   return (
-    <Container>
-      <Icon name={icon} size={20} color="#666360" />
+    <Container isFocused={isFocused}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocused || isFilled ? '#ff9000' : '#666360'}
+      />
       <TextInput
         ref={inputElementRef}
-        keyboardAppearance="dark"
+        defaultValue={defaultValue}
         placeholderTextColor="#666360"
         onChangeText={(value) => {
           inputValueRef.current.value = value;
         }}
-        defaultValue={defaultValue}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        keyboardAppearance="dark"
         {...rest}
       />
     </Container>

@@ -36,7 +36,7 @@ const SignUp: React.FC = () => {
   }, []);
 
   const handlePasswordInputFocusViaRef = useCallback(() => {
-    emailRef.current?.focus();
+    passwordRef.current?.focus();
   }, []);
 
   return (
