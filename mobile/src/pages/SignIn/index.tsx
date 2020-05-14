@@ -1,11 +1,19 @@
 import React, { useCallback, useRef } from 'react';
-import { Image, KeyboardAvoidingView, Platform, TextInput } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as yup from 'yup';
 
+import getValidationErrors from '../../utils/getValidationErrors';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
@@ -19,6 +27,11 @@ import {
 } from './styles';
 import logoImg from '../../assets/logo.png';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
@@ -28,8 +41,37 @@ const SignIn: React.FC = () => {
     navigation.navigate('SignUp');
   }, [navigation]);
 
-  const handleSignInSubmit = useCallback((data) => {
-    console.log(data);
+  const handleSignInSubmit = useCallback(async (data: SignInFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = yup.object().shape({
+        email: yup
+          .string()
+          .email('Insira um email válido')
+          .required('Email obrigatório'),
+        password: yup.string().required('Senha obrigatória'),
+      });
+
+      await schema.validate(data, { abortEarly: false });
+
+      // await SignIn()
+      // history push
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        const errors = getValidationErrors(error);
+        formRef.current?.setErrors(errors);
+
+        const errorMessages = Object.values(errors).join('\n');
+        Alert.alert('Falha na validação', String(errorMessages));
+        return;
+      }
+
+      Alert.alert(
+        'Erro na autenticação',
+        'Email ou senha incorretos, verifique seus dados'
+      );
+    }
   }, []);
 
   const handleFormSubmitViaRef = useCallback(() => {
