@@ -13,6 +13,7 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as yup from 'yup';
 
+import api from '../../services/api';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
@@ -37,42 +38,50 @@ const SignUp: React.FC = () => {
     navigation.goBack();
   }, [navigation]);
 
-  const handleSignUpSubmit = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSignUpSubmit = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = yup.object().shape({
-        name: yup.string().required('Nome obrigatório'),
-        email: yup
-          .string()
-          .required('Email obrigatório')
-          .email('Digite um email válido'),
-        password: yup.string().min(6, 'Senha de no mínimo 6 dígitos'),
-      });
+        const schema = yup.object().shape({
+          name: yup.string().required('Nome obrigatório'),
+          email: yup
+            .string()
+            .required('Email obrigatório')
+            .email('Digite um email válido'),
+          password: yup.string().min(6, 'Senha de no mínimo 6 dígitos'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      // post pra criar
-      // toast de success
-      // history push
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        const errors = getValidationErrors(error);
-        formRef.current?.setErrors(errors);
+        await api.post('users', data);
 
-        const errorMessages = Object.values(errors).join('\n');
-        Alert.alert('Falha na validação', String(errorMessages));
-        return;
+        Alert.alert(
+          'Cadastro efetuado com sucesso',
+          'Agora você pode se logar na aplicação'
+        );
+
+        navigation.goBack();
+      } catch (error) {
+        if (error instanceof yup.ValidationError) {
+          const errors = getValidationErrors(error);
+          formRef.current?.setErrors(errors);
+
+          const errorMessages = Object.values(errors).join('\n');
+          Alert.alert('Falha na validação', String(errorMessages));
+          return;
+        }
+
+        Alert.alert(
+          'Erro no cadastro',
+          'Não foi possível efetuar o cadastro, tente novamente'
+        );
       }
-
-      Alert.alert(
-        'Erro no cadastro',
-        'Não foi possível efetuar o cadastro, tente novamente'
-      );
-    }
-  }, []);
+    },
+    [navigation]
+  );
 
   const handleFormSubmitViaRef = useCallback(() => {
     formRef.current?.submitForm();
