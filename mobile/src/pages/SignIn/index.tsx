@@ -13,6 +13,7 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as yup from 'yup';
 
+import { useAuth } from '../../hooks/auth';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -36,10 +37,13 @@ const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const passwordRef = useRef<TextInput>(null);
+  const { signIn, user } = useAuth();
 
   const navigateToSignUp = useCallback(() => {
     navigation.navigate('SignUp');
   }, [navigation]);
+
+  console.log(user);
 
   const handleSignInSubmit = useCallback(async (data: SignInFormData) => {
     try {
@@ -55,8 +59,10 @@ const SignIn: React.FC = () => {
 
       await schema.validate(data, { abortEarly: false });
 
-      // await SignIn()
-      // history push
+      await signIn({
+        email: data.email,
+        password: data.password,
+      });
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         const errors = getValidationErrors(error);
