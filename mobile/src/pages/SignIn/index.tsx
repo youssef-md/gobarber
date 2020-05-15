@@ -37,48 +37,49 @@ const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const passwordRef = useRef<TextInput>(null);
-  const { signIn, user } = useAuth();
+  const { signIn } = useAuth();
 
   const navigateToSignUp = useCallback(() => {
     navigation.navigate('SignUp');
   }, [navigation]);
 
-  console.log(user);
+  const handleSignInSubmit = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-  const handleSignInSubmit = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
+        const schema = yup.object().shape({
+          email: yup
+            .string()
+            .email('Insira um email válido')
+            .required('Email obrigatório'),
+          password: yup.string().required('Senha obrigatória'),
+        });
 
-      const schema = yup.object().shape({
-        email: yup
-          .string()
-          .email('Insira um email válido')
-          .required('Email obrigatório'),
-        password: yup.string().required('Senha obrigatória'),
-      });
+        await schema.validate(data, { abortEarly: false });
 
-      await schema.validate(data, { abortEarly: false });
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (error) {
+        if (error instanceof yup.ValidationError) {
+          const errors = getValidationErrors(error);
+          formRef.current?.setErrors(errors);
 
-      await signIn({
-        email: data.email,
-        password: data.password,
-      });
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        const errors = getValidationErrors(error);
-        formRef.current?.setErrors(errors);
+          const errorMessages = Object.values(errors).join('\n');
+          Alert.alert('Falha na validação', String(errorMessages));
+          return;
+        }
 
-        const errorMessages = Object.values(errors).join('\n');
-        Alert.alert('Falha na validação', String(errorMessages));
-        return;
+        Alert.alert(
+          'Erro na autenticação',
+          'Email ou senha incorretos, verifique seus dados'
+        );
       }
-
-      Alert.alert(
-        'Erro na autenticação',
-        'Email ou senha incorretos, verifique seus dados'
-      );
-    }
-  }, []);
+    },
+    [signIn]
+  );
 
   const handleFormSubmitViaRef = useCallback(() => {
     formRef.current?.submitForm();
