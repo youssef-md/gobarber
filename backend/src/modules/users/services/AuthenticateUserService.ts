@@ -16,7 +16,7 @@ interface Response {
   token: string;
 }
 
-class CreateSessionService {
+class AuthenticateUserService {
   public async execute({ email, password }: Request): Promise<Response> {
     const usersRepository = getRepository(User);
 
@@ -39,4 +39,4 @@ class CreateSessionService {
   }
 }
 
-export default CreateSessionService;
+export default AuthenticateUserService;
