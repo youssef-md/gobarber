@@ -1,5 +1,8 @@
 import { container } from 'tsyringe';
 
+// Import Providers dependencies(HashProvider)
+import '@modules/users/providers';
+
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import AppointmentsReposity from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
 
