@@ -3,6 +3,9 @@ import { container } from 'tsyringe';
 // Import Providers dependencies(HashProvider)
 import '@modules/users/providers';
 
+// Import Providers dependencies(DiskStorage)
+import './providers';
+
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import AppointmentsReposity from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
 
