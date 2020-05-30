@@ -28,7 +28,7 @@ describe('UpdateUserAvatar', () => {
     expect(user.avatar).toEqual(userAvatarFilename);
   });
 
-  it('should not allow unexistent user to add an avatar', () => {
+  it('should not allow unexistent user to add an avatar', async () => {
     const fakeUsersRepository = new FakeUsersRepository();
     const fakeStorageProvider = new FakeStorageProvider();
 
@@ -37,7 +37,7 @@ describe('UpdateUserAvatar', () => {
       fakeStorageProvider,
     );
 
-    expect(
+    await expect(
       updateUserAvatar.execute({
         user_id: 'error',
         filename: 'error.png',
