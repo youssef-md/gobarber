@@ -11,7 +11,7 @@ let fakeMailProvider: FakeMailProvider;
 let sendForgotPasswordEmail: SendForgotPasswordEmailService;
 
 describe('SendForgotPasswordEmail', () => {
-  beforeEach(async function instantiateAllTheDependencies() {
+  beforeEach(function instantiateAllTheDependencies() {
     fakeUsersRepository = new FakeUsersRepository();
     fakeMailProvider = new FakeMailProvider();
     fakeUserTokensRepository = new FakeUserTokensRepository();

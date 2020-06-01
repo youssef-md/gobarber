@@ -8,7 +8,7 @@ let fakeStorageProvider: FakeStorageProvider;
 let updateUserAvatar: UpdateUserAvatarService;
 
 describe('UpdateUserAvatar', () => {
-  beforeEach(async function instantiateAllTheDependencies() {
+  beforeEach(function instantiateAllTheDependencies() {
     fakeUsersRepository = new FakeUsersRepository();
     fakeStorageProvider = new FakeStorageProvider();
 

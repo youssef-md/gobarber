@@ -10,7 +10,7 @@ let authenticateUser: AuthenticateUserService;
 let createUser: CreateUserService;
 
 describe('AuthenticateUser', () => {
-  beforeEach(async function instantiateAllTheDependencies() {
+  beforeEach(function instantiateAllTheDependencies() {
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
 

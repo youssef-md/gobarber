@@ -8,7 +8,7 @@ let fakeHashProvider: FakeHashProvider;
 let createUser: CreateUserService;
 
 describe('CreateUser', () => {
-  beforeEach(async function instantiateAllTheDependencies() {
+  beforeEach(function instantiateAllTheDependencies() {
     fakeUsersRepository = new FakeUsersRepository();
     fakeHashProvider = new FakeHashProvider();
 
