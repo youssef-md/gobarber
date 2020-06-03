@@ -1,4 +1,4 @@
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
@@ -13,6 +13,7 @@ interface IRequest {
   password?: string;
 }
 
+@injectable()
 class UpdateProfileService {
   constructor(
     @inject('UsersRepository')
