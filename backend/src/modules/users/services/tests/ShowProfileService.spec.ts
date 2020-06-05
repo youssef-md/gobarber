@@ -1,6 +1,6 @@
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
-import ShowProfileService from '../ShowProfileService';
 import AppError from '@shared/errors/AppError';
+import ShowProfileService from '../ShowProfileService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let showUserProfile: ShowProfileService;

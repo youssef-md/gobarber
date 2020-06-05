@@ -1,8 +1,8 @@
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
-import UpdateProfileService from '../UpdateProfileService';
 import AppError from '@shared/errors/AppError';
+import UpdateProfileService from '../UpdateProfileService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: IHashProvider;

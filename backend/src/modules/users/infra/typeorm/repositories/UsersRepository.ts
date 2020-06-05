@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, Not } from 'typeorm';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
@@ -20,6 +20,22 @@ class UsersRepository implements IUsersRepository {
   public async findByEmail(email: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({ where: { email } });
     return user;
+  }
+
+  public async findAllProviders(except_user_id?: string): Promise<User[]> {
+    let users: User[];
+
+    if (except_user_id) {
+      users = await this.ormRepository.find({
+        where: {
+          id: Not(except_user_id),
+        },
+      });
+    } else {
+      users = await this.ormRepository.find();
+    }
+
+    return users;
   }
 
   public async create({

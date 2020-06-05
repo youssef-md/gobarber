@@ -14,6 +14,7 @@ export default class ProfileController {
 
     return res.json(user);
   }
+
   public async update(req: Request, res: Response): Promise<Response> {
     const { name, email, old_password, password } = req.body;
     const user_id = req.user.id;
