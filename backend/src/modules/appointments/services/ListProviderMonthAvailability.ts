@@ -53,8 +53,6 @@ class ListProviderMonthAvailability {
       };
     });
 
-    console.log(availability);
-
     return availability;
   }
 }
