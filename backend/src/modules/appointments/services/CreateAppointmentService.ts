@@ -28,6 +28,9 @@ class CreateAppointmentService {
     if (isBefore(appointmentDate, Date.now()))
       throw new AppError('Past dates are not allowed!');
 
+    if (user_id === provider_id)
+      throw new AppError('User and provider are the same person!');
+
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
@@ -36,9 +39,9 @@ class CreateAppointmentService {
       throw new AppError('This appointment is already booked!');
 
     const appointment = await this.appointmentsRepository.create({
+      date: appointmentDate,
       provider_id,
       user_id,
-      date: appointmentDate,
     });
 
     return appointment;
