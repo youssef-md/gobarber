@@ -1,4 +1,4 @@
-import { startOfHour, isBefore } from 'date-fns';
+import { startOfHour, isBefore, getHours } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -30,6 +30,9 @@ class CreateAppointmentService {
 
     if (user_id === provider_id)
       throw new AppError('User and provider are the same person!');
+
+    if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 19)
+      throw new AppError('Invalid working date!');
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,

@@ -53,7 +53,7 @@ class ListProviderDayAvailability {
         appointment => getHours(appointment.date) === hour,
       );
 
-      const compareDate = new Date(year, month - 1, day, hour); // 2020-05-20 09:00:00
+      const compareDate = new Date(year, month - 1, day, hour); // will format -> 2020-05-20 09:00:00
 
       return {
         hour,
