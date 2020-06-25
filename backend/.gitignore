@@ -2,8 +2,9 @@ node_modules
 dist
 
 tmp/*
-
 # Will keep only the .gitkeep to maintain the folder
 !tmp/.gitkeep
 
 coverage
+.env
+ormconfig.json
