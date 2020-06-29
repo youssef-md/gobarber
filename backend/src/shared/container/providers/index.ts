@@ -7,6 +7,8 @@ import EtherealMailProvider from './MailProvider/implementations/EtherealMailPro
 import HandlebarsMailTemplateProvider from './MailTemplateProvider/implementations/HandlebarsMailTemplateProvider';
 import IMailTemplateProvider from './MailTemplateProvider/models/IMailTemplate';
 
+import './CacheProvider';
+
 container.registerSingleton<IStorageProvider>(
   'StorageProvider',
   DiskStorageProvider,
