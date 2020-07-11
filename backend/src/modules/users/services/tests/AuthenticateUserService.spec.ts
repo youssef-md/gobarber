@@ -1,13 +1,11 @@
 import AppError from '@shared/errors/AppError';
 import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
 import AuthenticateUserService from '../AuthenticateUserService';
-import CreateUserService from '../CreateUserService';
 import FakeHashProvider from '../../providers/HashProvider/fakes/FakeHashProvider';
 
 let fakeUsersRepository: FakeUsersRepository;
 let fakeHashProvider: FakeHashProvider;
 let authenticateUser: AuthenticateUserService;
-let createUser: CreateUserService;
 
 describe('AuthenticateUser', () => {
   beforeEach(function instantiateAllTheDependencies() {
@@ -18,12 +16,10 @@ describe('AuthenticateUser', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
-
-    createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
   });
 
   it('should create a new User', async () => {
-    const user = await createUser.execute({
+    const user = await fakeUsersRepository.create({
       name: 'Youssef',
       email: 'youssef@gmail.com',
       password: '123123',
@@ -50,7 +46,7 @@ describe('AuthenticateUser', () => {
   it('should not authorize user with the wrong password', async () => {
     const userEmail = 'youssef@gmail.com';
 
-    await createUser.execute({
+    await fakeUsersRepository.create({
       name: 'Youssef',
       email: userEmail,
       password: '123123',
