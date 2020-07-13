@@ -10,10 +10,16 @@ import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInD
 class FakeAppointmentsReposity implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(
+    date: Date,
+    provider_id: string,
+  ): Promise<Appointment | undefined> {
     const findAppointment = this.appointments.find(
-      function checkIfIsTheSameDate(appointment) {
-        return isEqual(appointment.date, date);
+      function checkIfIsTheSameDateWithSameProvider(appointment) {
+        return (
+          isEqual(appointment.date, date) &&
+          appointment.provider_id === provider_id
+        );
       },
     );
 
