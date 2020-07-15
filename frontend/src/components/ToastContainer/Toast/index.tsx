@@ -27,10 +27,10 @@ const Toast: React.FC<ToastProps> = ({
     return function cleanTimerIfUserClosesToastBefore() {
       clearTimeout(timer);
     };
-  }, []);
+  }, [id, removeToast]);
 
   return (
-    <Container type={type} hasDescription={!!description} style={style}>
+    <Container type={type} hasDescription={Number(!!description)} style={style}>
       {icons[type]}
       <div>
         <strong>{title}</strong>
