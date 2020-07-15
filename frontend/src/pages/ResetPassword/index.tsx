@@ -4,13 +4,14 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as yup from 'yup';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Container, Content, Background } from './styles';
 import logo from '../../assets/logo.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { useToast } from '../../hooks/toast';
+import api from '../../services/api';
 
 interface ResetPasswordFormData {
   password: string;
@@ -19,11 +20,12 @@ interface ResetPasswordFormData {
 
 const ResetPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-
   const history = useHistory();
+  const { search } = useLocation();
   const { addToast } = useToast();
+  const paramsToken = new URLSearchParams(search).get('token');
 
-  const handleSignInSubmit = useCallback(
+  const handleResetPasswordSubmit = useCallback(
     async (data: ResetPasswordFormData) => {
       try {
         formRef.current?.setErrors({});
@@ -37,6 +39,20 @@ const ResetPassword: React.FC = () => {
 
         await schema.validate(data, {
           abortEarly: false,
+        });
+
+        const { password, password_confirmation } = data;
+
+        await api.post('/password/reset', {
+          password,
+          password_confirmation,
+          token: paramsToken,
+        });
+
+        addToast({
+          type: 'success',
+          title: 'Senha alterada com sucesso!',
+          description: 'Faça o login com sua nova senha',
         });
 
         history.push('/');
@@ -54,14 +70,18 @@ const ResetPassword: React.FC = () => {
         });
       }
     },
-    [history, addToast]
+    [history, addToast, paramsToken]
   );
 
   return (
     <Container>
       <Content>
         <img src={logo} alt="Go Barber Logo" />
-        <Form onSubmit={handleSignInSubmit} ref={formRef} autoComplete="off">
+        <Form
+          onSubmit={handleResetPasswordSubmit}
+          ref={formRef}
+          autoComplete="off"
+        >
           <h2>Crie uma nova senha</h2>
           <Input
             name="password"
