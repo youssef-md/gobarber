@@ -3,8 +3,8 @@ import { FiLogIn, FiMail } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as yup from 'yup';
+import { Link } from 'react-router-dom';
 
-import { Link, useHistory } from 'react-router-dom';
 import { Container, Content, Background } from './styles';
 import logo from '../../assets/logo.svg';
 import Input from '../../components/Input';
@@ -21,7 +21,6 @@ const ForgotPassword: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
 
-  const history = useHistory();
   const { addToast } = useToast();
 
   const handleResetPasswordSubmit = useCallback(
