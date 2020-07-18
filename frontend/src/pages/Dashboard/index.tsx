@@ -1,6 +1,15 @@
 import React from 'react';
-import { FiPower } from 'react-icons/fi';
-import { Container, Header, HeaderContent, Profile } from './styles';
+import { FiPower, FiClock } from 'react-icons/fi';
+import {
+  Container,
+  Header,
+  HeaderContent,
+  Profile,
+  Content,
+  Schedule,
+  NextAppointment,
+  Calendar,
+} from './styles';
 
 import logo from '../../assets/logo-name-only.svg';
 import { useAuth } from '../../hooks/auth';
@@ -28,6 +37,34 @@ const Dashboard: React.FC = () => {
           </Profile>
         </HeaderContent>
       </Header>
+
+      <Content>
+        <Schedule>
+          <h1>Horários agendados</h1>
+          <p>
+            <span>Hoje</span>
+            <span>Dia 06</span>
+            <span>Segunda-feira</span>
+          </p>
+
+          <NextAppointment>
+            <strong>Atendimento a seguir</strong>
+            <div>
+              <img
+                src="https://avatars1.githubusercontent.com/u/29265857?s=460&u=439da134e6b1a4766dbba464f048a21cf2036f3e&v=4"
+                alt="youssef"
+              />
+              <strong>Youssef Muhamad</strong>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+            </div>
+          </NextAppointment>
+        </Schedule>
+
+        <Calendar />
+      </Content>
     </Container>
   );
 };
